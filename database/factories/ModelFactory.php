@@ -22,7 +22,10 @@ $factory->define(App\MainPage::class, function (Faker\Generator $faker) {
     return [
         'filename' => $faker->word,
         'filesize' => rand(100, 10000),
-        'path' => $faker->imageUrl
+        'path' => $faker->imageUrl,
+        'title' => $faker->sentence,
+        'describe' => $faker->sentence,
+        'visible' => $faker->boolean
     ];
 });
 

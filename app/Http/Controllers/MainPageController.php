@@ -17,7 +17,7 @@ class MainPageController extends Controller
      */
     public function index()
     {
-        return MainPage::all();
+        return MainPage::orderBy('order')->get();
     }
 
     /**
@@ -33,26 +33,31 @@ class MainPageController extends Controller
             return response()
                     ->json([
                         'success' => false,
-                        'error' => ['code' => 500, 'message' => 'File does not exist.']
-                    ]);
+                        'error' => ['message' => 'File does not exist.']
+                    ], 404);
         }
 
-        $dir = url('/').'/img';
+        $path = url('/').'/img/';
         $img_name = $request->photo->getClientOriginalName();
         $img_size = $request->photo->getClientSize();
-        $img_path = $dir.'/'.$img_name;
         $order = MainPage::count() + 1;
+        $title = $request->title;
+        $describe = $request->describe;
 
+        /* ---存檔--- */
         Flysystem::put(
             $img_name,
             file_get_contents($request->photo)
         );
 
+        /* ---資料庫建檔--- */
         MainPage::create([
             'filename' => $img_name,
             'filesize' => $img_size,
-            'path' => $img_path,
-            'order' => $order
+            'path' => $path,
+            'order' => $order,
+            'title' => $title,
+            'describe' => $describe
         ]);
 
         return response()->json(['success' => true]);
@@ -88,12 +93,39 @@ class MainPageController extends Controller
     public function update(Request $request, $id)
     {
 
+        /* ---檢查圖片Info有沒有送來--- */
+        if (!$request->has(['filename','title', 'describe'])) {
+            return response()
+                    ->json([
+                        'success' => false,
+                        'error' => ['message' => 'Column keys do not exist.']
+                    ], 404);
+        }
+
+        $img_name = $request->filename;
+        $title = $request->title;
+        $describe = $request->describe;
+
         MainPage::where('id', $id)
                 ->update([
-                    'filename' => $request->x
+                    'filename' => $img_name,
+                    'title' => $title,
+                    'describe' => $describe
                 ]);
 
         return response()->json(['success' => true]);
+
+    }
+
+    /* ---換圖片--- */
+    public function switch(Request $request) {
+
+        if ($request->hasFile('photo')) {   //檢查有沒有上傳新照片
+            $img_name = $request->photo->getClientOriginalName();
+            $img_size = $request->photo->getClientSize();
+        } else {
+            // failed
+        }
 
     }
 

@@ -11,11 +11,15 @@
 |
 */
 
-$router->group(['prefix' => 'api/frontend'], function () use ($router) {
-    $router->get('mainpage', 'MainPageController@index');
-    $router->get('mainpage/{id}', 'MainPageController@show');
-    $router->post('mainpage', 'MainPageController@store');
-    $router->put('mainpage/{id}', 'MainPageController@update');
+$router->group(['prefix' => 'api'], function () use ($router) {
+
+    /* ---Main Page--- */ 
+    $router->get('mainpages', 'MainPageController@index');
+    $router->get('mainpages/{id}', 'MainPageController@show');
+    $router->post('mainpages', 'MainPageController@store');
+    $router->post('mainpages/switch/{id}', 'MainPageController@switch');
+    $router->put('mainpages/{id}', 'MainPageController@update');
+    
 });
 
 $router->get('/', function () use ($router) {

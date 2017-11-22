@@ -17,8 +17,11 @@ class CreateMainPagesTable extends Migration
             $table->increments('id');
             $table->string('filename', 256);
             $table->integer('filesize');
+            $table->string('title', 128);
+            $table->string('describe', 256);
             $table->string('path', 256);
             $table->integer('order');
+            $table->boolean('visible')->default(true);
             $table->softDeletes();
             $table->timestamps();
         });
