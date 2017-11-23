@@ -10,7 +10,13 @@ class MainPage extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'filename', 'filesize', 'path', 'order'
+        'filename',
+        'filesize',
+        'path',
+        'order',
+        'title',
+        'describe',
+        'visible'
     ];
 
 }

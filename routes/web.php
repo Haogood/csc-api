@@ -16,9 +16,12 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     /* ---Main Page--- */ 
     $router->get('mainpages', 'MainPageController@index');
     $router->get('mainpages/{id}', 'MainPageController@show');
+    $router->get('mainpages/src/{id}', 'MainPageController@getImage');
     $router->post('mainpages', 'MainPageController@store');
     $router->post('mainpages/switch/{id}', 'MainPageController@switch');
     $router->put('mainpages/{id}', 'MainPageController@update');
+    $router->delete('mainpages/{id}', 'MainPageController@destroy');
+    
     
 });
 
