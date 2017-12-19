@@ -11,8 +11,6 @@
 |
 */
 
-$router->post('auth/login', 'AuthController@authenticate');
-
 $router->group(['prefix' => 'api', 'middleware' => ['jwt.auth']], function() use ($router) {
     $router->get('user', 'UserController@index');
     $router->post('mainpages', 'MainPageController@store');
@@ -23,7 +21,7 @@ $router->group(['prefix' => 'api', 'middleware' => ['jwt.auth']], function() use
 
 $router->group(['prefix' => 'api'], function () use ($router) {
 
-    /* ---Main Page--- */ 
+    $router->post('auth/login', 'AuthController@authenticate');
     $router->get('mainpages', 'MainPageController@index');
     $router->get('mainpages/{id}', 'MainPageController@show');
     $router->get('mainpages/src/{id}', 'MainPageController@getImage');
@@ -34,6 +32,6 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('/key', function () {
-    return str_random(32);
+$router->get('/hash', function () {
+    return app('hash')->make('admin');
 });

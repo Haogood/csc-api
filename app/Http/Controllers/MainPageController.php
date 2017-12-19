@@ -176,13 +176,14 @@ class MainPageController extends Controller
         
         $query = MainPage::select('filename')->where('id', $id)->first();
 
-        if (!is_object($query)) {
-            return response()->json(['success' => false, 'message' => 'Image not exist.'], 404);
+        if (is_object($query)) {
+            $path = storage_path('files/'.$this->img_src.$query->filename);
+            if (file_exists($path)) {
+                return Image::make($path)->response();
+            }
         }
 
-        $path = storage_path('files/'.$this->img_src.$query->filename);
-        
-        return Image::make($path)->response();
+        return response()->json(['success' => false, 'message' => 'Image not exist.'], 404);
         
     }
 

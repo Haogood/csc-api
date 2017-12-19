@@ -43,8 +43,7 @@ class AuthController extends BaseController
             'exp' => time() + 60*60 // Expiration time
         ];
         
-        // As you can see we are passing `JWT_SECRET` as the second parameter that will 
-        // be used to decode the token in the future.
+        // As you can seeode the token in the future.
         return JWT::encode($payload, env('JWT_SECRET'));
     } 
 
@@ -60,27 +59,20 @@ class AuthController extends BaseController
             'password'  => 'required'
         ]);
 
-        // Find the user by email
         $user = User::where('email', $this->request->input('email'))->first();
 
         if (!$user) {
-            // You wil probably have some sort of helpers or whatever
-            // to make sure that you have the same response format for
-            // differents kind of responses. But let's return the 
-            // below respose for now.
             return response()->json([
                 'error' => 'Email does not exist.'
             ], 400);
         }
 
-        // Verify the password and generate the token
         if (Hash::check($this->request->input('password'), $user->password)) {
             return response()->json([
                 'token' => $this->jwt($user)
             ], 200);
         }
 
-        // Bad Request response
         return response()->json([
             'error' => 'Email or password is wrong.'
         ], 400);
