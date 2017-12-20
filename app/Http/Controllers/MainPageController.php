@@ -44,6 +44,10 @@ class MainPageController extends Controller
             return response()->json(['success' => false, 'message' => 'File does not exist.'], 404);
         }
 
+        if (!$request->has(['title', 'describe'])) {
+            return response()->json(['success' => false, 'message' => 'Please provide column title, describe'], 404);
+        }
+
         $img_name = $request->photo->getClientOriginalName();
         $img_size = $request->photo->getClientSize();
         $order = $this->getOrderNumber();
@@ -113,18 +117,16 @@ class MainPageController extends Controller
     {
 
         /* ---檢查圖片Info有沒有送來--- */
-        if (!$request->has(['filename','title', 'describe', 'visible'])) {
-            return response()->json(['success' => false,'message' => 'Column keys do not exist.'], 404);
+        if (!$request->has(['title', 'describe', 'visible'])) {
+            return response()->json(['success' => false,'message' => 'Must have column title, describe, visible'], 404);
         }
 
-        $img_name = $request->filename;
         $title = $request->title;
         $describe = $request->describe;
         $visible = $request->visible;
 
         MainPage::where('id', $id)
                 ->update([
-                    'filename' => $img_name,
                     'title' => $title,
                     'describe' => $describe,
                     'visible' => $visible

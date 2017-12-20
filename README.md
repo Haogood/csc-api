@@ -25,6 +25,7 @@
     * `GET api/user`
 * 新增Slide ( 資訊 + 圖片 )
     * `POST /api/mainpages`
+    * 必填欄位 ( title, describe )
 * 更新Slide圖片
     * `POST /api/mainpages/switch/{id}`
 * 更新Slide資訊
