@@ -17,9 +17,9 @@
 * 取得所有Slides內容
     * `GET /api/mainpages`
 * 取得指定Slide內容
-    * `POST /api/mainpages/{id}`
+    * `GET /api/mainpages/{id}`
 * 取得指定圖片 (可保護真實檔案路徑)
-    * `POST /api/mainpages/src/{id}`    
+    * `GET /api/mainpages/src/{id}`    
 ### 需要驗證認證才可訪問 :
 * 取得用戶資料
     * `GET api/user`
