@@ -24,7 +24,7 @@
 * 取得用戶資料
     * `GET api/user`
 * 新增Slide ( 資訊 + 圖片 )
-    * `POST /api/mainpages/switch/{id}`
+    * `POST /api/mainpages`
 * 更新Slide圖片
     * `POST /api/mainpages/switch/{id}`
 * 更新Slide資訊
